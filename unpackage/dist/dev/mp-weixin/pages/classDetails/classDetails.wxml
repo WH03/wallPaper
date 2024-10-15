@@ -1,0 +1,1 @@
+<view class="classDetails data-v-ad366a4e"><view class="content data-v-ad366a4e"><navigator wx:for="{{a}}" wx:for-item="item" class="item data-v-ad366a4e" url="/pages/preview/preview"><image class="data-v-ad366a4e" src="{{b}}" mode="scaleToFill"/></navigator></view></view>
