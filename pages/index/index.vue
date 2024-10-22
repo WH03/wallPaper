@@ -40,7 +40,7 @@
 			</common-title>
 			<view class="content">
 				<scroll-view scroll-x>
-					<view class="box" v-for="item in randomList" :key="item._id" @click="goPreview">
+					<view class="box" v-for="item in randomList" :key="item._id" @click="goPreview(item._id)">
 						<image :src="item.smallPicurl" mode="scaleToFill" />
 					</view>
 				</scroll-view>
@@ -74,7 +74,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
 import { apiGetBanner, apiGetDayRandom, apiGetNotice, apiGetClassify } from '@/api/apis.js';
+
 
 const bannerList = ref([])
 const randomList = ref([])
@@ -103,12 +105,33 @@ const getClassify = async () => {
 	// console.log('@@@res', res)
 }
 
+// 跳转到预览页面
+const goPreview = (id) => {
+	// 将数据存储到localStorage
+	uni.setStorageSync("storageClassDetail", randomList.value)
 
-const goPreview = () => {
 	uni.navigateTo({
-		url: "/pages/preview/preview"
+		url: "/pages/preview/preview?id=" + id
 	})
+
 }
+
+// 分享给好友
+onShareAppMessage((e) => {
+	return {
+		title: '壁纸',
+		path: '/page/index/index'
+	}
+})
+
+// 分享到朋友圈
+onShareTimeline(() => {
+	return {
+		title: '壁纸啦啦',
+		// imageUrl: '/static/images/logo2.jpg',
+		imageUrl: bannerList.value[0].picurl
+	}
+})
 
 
 

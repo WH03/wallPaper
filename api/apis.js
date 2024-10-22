@@ -22,3 +22,25 @@ export function apiGetClassDetails(data = {}) {
         data
     })
 }
+
+export function apiGetSetupScore(data = {}) {
+    return request({
+        url: '/setupScore',
+        data
+    })
+}
+
+// 下载
+export function apiWriteDownload(data = {}) {
+    return request({
+        url: '/downloadWall',
+        data
+    })
+}
+
+export function apiDetailWall(data={}){
+    return request( {
+        url:'/detailWall',
+        data
+    })
+}
