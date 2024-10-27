@@ -38,9 +38,41 @@ export function apiWriteDownload(data = {}) {
     })
 }
 
-export function apiDetailWall(data={}){
-    return request( {
-        url:'/detailWall',
+export function apiDetailWall(data = {}) {
+    return request({
+        url: '/detailWall',
+        data
+    })
+}
+
+//用户登录
+export function apiUserInfo(data = {}) {
+    return request({
+        url: '/userInfo',
+        data
+    })
+}
+
+//下载记录
+export function apiHistoryList(data = {}) {
+    return request({
+        url: '/userWallList',
+        data
+    })
+}
+
+//获取公告
+export function apiNoticeDetail(data = {}) {
+    return request({
+        url: '/wallNewsDetail',
+        data
+    })
+}
+
+// 获取搜索记录
+export function apiSearchData(data = {}) {
+    return request({
+        url: '/searchWall',
         data
     })
 }

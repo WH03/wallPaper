@@ -1,5 +1,4 @@
 
-
 const BASE_URL = 'https://tea.qingnian8.com/api/bizhi'
 export function request(config = {}) {
 	let { url, method = "GET", header = {},data={} } = config

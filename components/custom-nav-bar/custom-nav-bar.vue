@@ -5,10 +5,13 @@
 			<view class="titleBar"
 				:style="{ height: getTitleBarHeight() + 'px', marginLeft: getLeftIconLeft() + 'px' }">
 				<view class="title">{{ title }}</view>
-				<view class="search">
-					<uni-icons class="icon" type="search" color="#888" size="18"></uni-icons>
-					<view class="text">搜索</view>
-				</view>
+				<navigator url="/pages/search/search">
+					<view class="search">
+						<uni-icons class="icon" type="search" color="#888" size="18"></uni-icons>
+						<view class="text">搜索</view>
+					</view>
+				</navigator>
+
 			</view>
 		</view>
 		<view class="fill" :style="{ height: getNavBarHeight() + 'px' }">

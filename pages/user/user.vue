@@ -1,37 +1,39 @@
 <template>
 	<view class="userLayout pageBg">
+		<view :style="{ height: getNavBarHeight() + 'px' }"></view>
 		<view class="userInfo">
 			<view class="avatar">
 				<image src="../../static//images/xxmLogo.png" mode="scaleToFill" />
 			</view>
-			<view class="ip">119.163.181.236</view>
-			<view class="address">来自：山东</view>
+			<view class="ip">{{ userInfo.IP }}</view>
+			<view class="address">来自：{{ userInfo?.address.city || userInfo?.address.province || userInfo?.address }}
+			</view>
 		</view>
 		<view class="section">
 			<view class="list">
 
-				<navigator url="/pages/classDetails/classDetails">
+				<navigator url="/pages/classDetails/classDetails?name=我的下载&type=download">
 					<view class="row">
 						<view class="left">
 							<uni-icons type="download-filled" size="20" color="#28b389"></uni-icons>
 							<view class="text">我的下载</view>
 						</view>
 						<view class="right">
-							<view class="text">33</view>
+							<view class="text">{{ userInfo?.downloadSize }}</view>
 							<uni-icons type="right" size="15" color="#ccc"></uni-icons>
 						</view>
 					</view>
 				</navigator>
 
 
-				<navigator url="/pages/classDetails/classDetails">
+				<navigator url="/pages/classDetails/classDetails?name=我的评分&type=score">
 					<view class="row">
 						<view class="left">
 							<uni-icons type="star-filled" size="20" color="#28b389"></uni-icons>
 							<view class="text">我的评分</view>
 						</view>
 						<view class="right">
-							<view class="text">22</view>
+							<view class="text">{{ userInfo?.scoreSize }}</view>
 							<uni-icons type="right" size="15" color="#aaa"></uni-icons>
 						</view>
 					</view>
@@ -57,38 +59,62 @@
 		</view>
 		<view class="section">
 			<view class="list">
-				<view class="row">
-					<view class="left">
-						<uni-icons type="notification-filled" size="20" color="#28b389"></uni-icons>
-						<view class="text">订阅更新</view>
+				<navigator url="/pages/notice/detail?id=653507c6466d417a3718e94b">
+					<view class="row">
+						<view class="left">
+							<uni-icons type="notification-filled" size="20" color="#28b389"></uni-icons>
+							<view class="text">订阅更新</view>
+						</view>
+						<view class="right">
+							<view class="text"></view>
+							<uni-icons type="right" size="15" color="#aaa"></uni-icons>
+						</view>
 					</view>
-					<view class="right">
-						<view class="text"></view>
-						<uni-icons type="right" size="15" color="#aaa"></uni-icons>
+				</navigator>
+				<navigator url="/pages/notice/detail?id=6536358ce0ec19c8d67fbe82">
+					<view class="row">
+						<view class="left">
+							<uni-icons type="flag-filled" size="20" color="#28b389"></uni-icons>
+							<view class="text">常见问题</view>
+						</view>
+						<view class="right">
+							<view class="text"></view>
+							<uni-icons type="right" size="15" color="#aaa"></uni-icons>
+						</view>
 					</view>
-				</view>
-				<view class="row">
-					<view class="left">
-						<uni-icons type="flag-filled" size="20" color="#28b389"></uni-icons>
-						<view class="text">常见问题</view>
-					</view>
-					<view class="right">
-						<view class="text"></view>
-						<uni-icons type="right" size="15" color="#aaa"></uni-icons>
-					</view>
-				</view>
+				</navigator>
 			</view>
 		</view>
+	</view>
+	<view class="loadingLayout">
+		<uni-load-more :status="loading" />
 	</view>
 </template>
 
 <script setup>
+import { getNavBarHeight } from '@/utils/system.js'
+import { apiUserInfo } from '@/api/apis.js'
+
+const userInfo = ref({})
 
 const clickContact = () => {
 	uni.makePhoneCall({
 		phoneNumber: "114"
 	})
 }
+
+
+const getUserInfo = async () => {
+	let res = await apiUserInfo()
+	console.log('@@@res', res)
+	userInfo.value = res.data
+
+}
+
+
+getUserInfo()
+
+
 </script>
 
 <style lang="scss" scoped>

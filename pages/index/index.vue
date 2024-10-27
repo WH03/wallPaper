@@ -1,11 +1,20 @@
 <template>
 	<view class="homeLayout pageBg">
+		<!-- #ifndef MP-TOUTIAO -->
 		<custom-nav-bar title="推荐"></custom-nav-bar>
+		<!-- #endif -->
 		<view class="banner">
 			<swiper circular indicator-dots indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#fff">
 				<swiper-item v-for="item in bannerList" :key="item._id">
-					<image :src="item.picurl" alt="">
-					</image>
+					<navigator v-if="item.target == 'miniProgram'" :url="item.url" target="miniProgram"
+						app-id="item.appid" class="link">
+						<image :src="item.picurl" alt="">
+						</image>
+					</navigator>
+					<navigator v-else :url="`/pages/classDetail/ClassDetails?${item.url}`" class="link">
+						<image :src="item.picurl" alt="">
+						</image>
+					</navigator>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -17,7 +26,7 @@
 			<view class="center">
 				<swiper vertical circular autoplay interval="1500" duration="300">
 					<swiper-item v-for="item in noticeList" :key="item._id">
-						<navigator url="/pages/notice/detail">
+						<navigator url="`/pages/notice/detail?id=${item._id}`">
 							{{ item.title }}
 						</navigator>
 					</swiper-item>>
@@ -55,7 +64,7 @@
 				</template>
 
 				<template #custom>
-					<navigator url="" open-type="navigate" hover-class="navigator-hover">
+					<navigator url="/pages/classify/classify" open-type="reLaunch" hover-class="navigator-hover">
 						More+
 					</navigator>
 
@@ -76,6 +85,7 @@
 import { ref, onMounted } from 'vue'
 import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
 import { apiGetBanner, apiGetDayRandom, apiGetNotice, apiGetClassify } from '@/api/apis.js';
+import ClassDetails from '../classDetails/classDetails.vue';
 
 
 const bannerList = ref([])
@@ -158,9 +168,14 @@ onMounted(() => {
 				height: 100%;
 				padding: 0 30rpx;
 
-				image {
+				.link {
 					width: 100%;
 					height: 100%;
+
+					image {
+						width: 100%;
+						height: 100%;
+					}
 				}
 			}
 

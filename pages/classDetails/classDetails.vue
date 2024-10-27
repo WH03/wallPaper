@@ -19,7 +19,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { onLoad, onUnload, onReachBottom, onShareAppMessage, onShareTimeline } from "@dcloudio/uni-app"
-import { apiGetClassDetails } from "@/api/apis.js"
+import { apiGetClassDetails, apiHistoryList } from "@/api/apis.js"
 import { gotoHome } from '@/utils/common.js'
 const classDetailsList = ref([])
 
@@ -33,9 +33,11 @@ const queryParams = {
 }
 
 onLoad((e) => {
-	let { id = null, name = null } = e
-	if (!id) gotoHome()
-	queryParams.classid = id
+	let { id = null, name = null, type = null } = e
+	// if (!id) gotoHome()
+	if (type) queryParams.type = type
+	if (id) queryParams.classid = id
+
 	pageNume.value = name
 	// 修改标题
 	uni.setNavigationBarTitle({ title: pageNume.value })
@@ -52,7 +54,9 @@ onReachBottom(() => {
 
 // 获取分类列表网络数据
 const getClassDetails = async () => {
-	let res = await apiGetClassDetails(queryParams)
+	let res;
+	if (queryParams.classid) res = await apiGetClassDetails(queryParams)
+	if (queryParams.type) res = await apiHistoryList(queryParams)
 	// console.log('res', res)
 	classDetailsList.value = [...classDetailsList.value, ...res.data]
 	// 如果返回的数据，少于传递的参数，就说明没有更多数据了，停止请求

@@ -5,10 +5,13 @@
 				<image v-if="readImgs.includes(index)" @click="maskChange" :src="item.picurl" mode="scaleToFill" />
 			</swiper-item>
 		</swiper>
+
 		<view class="mask" v-if="maskState">
+			<!-- #ifndef MP-TOUTIAO -->
 			<view class="goBack" @click="goBack" :style="{ top: getTitleBarHeight() + 'px' }">
 				<uni-icons type="back" size="20" color="#fff"></uni-icons>
 			</view>
+			<!-- #endif -->
 			<view class="count">{{ currentIndex + 1 }}/ {{ classDetailsList.length }}</view>
 			<view class="time">
 				<uni-dateformat :date="new Date()" format="hh:mm"></uni-dateformat>
@@ -564,6 +567,7 @@ onShareTimeline(() => {
 				width: 80rpx;
 				line-height: 1em;
 				text-align: right;
+				font-size: 28rpx;
 			}
 
 		}
