@@ -6,7 +6,7 @@
 				<image src="../../static//images/xxmLogo.png" mode="scaleToFill" />
 			</view>
 			<view class="ip">{{ userInfo.IP }}</view>
-			<view class="address">来自：{{ userInfo?.address.city || userInfo?.address.province || userInfo?.address }}
+			<view class="address">来自：{{ userInfo.address?.city || userInfo.address?.province || userInfo?.address }}
 			</view>
 		</view>
 		<view class="section">
@@ -92,6 +92,7 @@
 </template>
 
 <script setup>
+	import {ref} from 'vue'
 import { getNavBarHeight } from '@/utils/system.js'
 import { apiUserInfo } from '@/api/apis.js'
 
